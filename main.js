@@ -160,9 +160,11 @@ function changeCurrentSongDetails(songObj) {
           // play the next song
           var nextSongObj = songs[currentSongNumber]; // since song is arra then currentSongnumber is intialed by 1 then it will always go to next song
           audio.src = nextSongObj.fileName // changing the source of the audio
+          changeSongDisplay(nextSongObj);
+          $('#name_song').text(songs[currentSongNumber].name);
           toggleSong(); // playing the song of which src has been changed
           changeCurrentSongDetails(nextSongObj); // updatng the details such as image at the bottom
-          changeSongDisplay(nextSongObj);
+
           currentSongNumber = currentSongNumber +1; // increasing the value of currentSongNumber for the next time
         }else{
           // stop playin
@@ -232,6 +234,7 @@ function changeCurrentSongDetails(songObj) {
         //   console.log(currentSongNumber -1);
         //   console.log(obj.name);
         //   console.log(obj.artist);
+        $('#name_song').text(obj.name);
           changeCurrentSongDetails( obj);
           changeSongDisplay(obj);
             // updating the song details just above the footer of the playing song
@@ -252,10 +255,14 @@ function changeCurrentSongDetails(songObj) {
           if(willImers == 0) {
             $('#immers').addClass('hidden');
             $('#mineslider').removeClass('hidden');
+            $('.fa-podcast').removeClass('disabled');
+            $('#name_song').removeClass('hidden');
             console.log('now class have to be hidden');}
           else {
             $('#immers').removeClass('hidden');
             $('#mineslider').addClass('hidden');
+            $('.fa-podcast').addClass('disabled');
+            $('#name_song').addClass('hidden');
             console.log('now class have to be unhidden'); }
       });
       $('body').on('keypress', function(event) {
