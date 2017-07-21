@@ -215,3 +215,28 @@ table.dataTable tbody tr {
 .fa.disabled{
   color: gray;
 }
+.immersive-images {
+   width: 65%;
+   height: 52%;
+   border: 2px solid white;
+   float: right;
+   margin: 30px;
+   position: absolute;
+   left: 30%;
+   top: 15%;
+}
+.image-moments {
+  position: absolute;
+  transition: opacity .5s ease-in;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+
+.image-moments + .image-moments {
+   opacity: 0;
+}
+#songs_filter input {
+//  width : 100px !important ;
+border-radius: 15px 50px 30px !important;
+}

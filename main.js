@@ -2,13 +2,16 @@
  var willShuffle = 0;
  var willLoop = 1;
  var willMute =1;
+ var willImers =1;
+$('.dataTables_filter input').attr("placeholder", "enter seach terms here");
 var songs = [{
                'name': 'Badri Ki Dulhania (Title Track)',
                'artist': 'Neha Kakkar, Monali Thakur, Ikka Singh, Dev Negi',
                'album': 'Badrinath ki Dulhania',
                'duration': '2:56',
               'fileName': 'song1.mp3',
-              'image':'song1.jpg'
+              'image':'song1.jpg',
+              'images':'slide/song1'
            },
            {
                'name': 'Humma Song',
@@ -16,7 +19,8 @@ var songs = [{
                'album': 'Ok Jaanu',
                'duration': '3:15',
                'fileName': 'song2.mp3',
-               'image':'song2.jpg'
+               'image':'song2.jpg',
+               'images':'slide/song2'
            },
            {
                'name': 'Nashe Si Chadh Gayi',
@@ -24,7 +28,8 @@ var songs = [{
                'album': 'Befikre',
                'duration': '2:34',
                'fileName': 'song3.mp3',
-               'image':'song3.jpg'
+               'image':'song3.jpg',
+               'images':'slide/song3'
            },
            {
                'name': 'The Breakup Song',
@@ -32,7 +37,8 @@ var songs = [{
                'album': 'Ae Dil Hai Mushkil',
                'duration': '2:29',
                'fileName': 'song4.mp3',
-               'image':'song4.jpg'
+               'image':'song4.jpg',
+               'images':'slide/song4'
            }]
 function changeCurrentSongDetails(songObj) {
     $('.current-song-image').attr('src','img/' + songObj.image)
@@ -46,6 +52,7 @@ function changeCurrentSongDetails(songObj) {
             console.log('Playing');
             $('.play-icon').removeClass('fa-play').addClass('fa-pause'); // chainning property
             song.play();  // to play the song
+            createMoments();
         } else {
             console.log('Pausing');
             $('.play-icon').removeClass('fa-pause').addClass('fa-play');
@@ -103,6 +110,7 @@ function changeCurrentSongDetails(songObj) {
                       //  var songObj = songs[position];
                         changeCurrentSongDetails(songObj);
                         audio.src = songName;
+                        changeSongDisplay(songObj);
                         toggleSong();
                         }
                       //audio.play();
@@ -111,6 +119,7 @@ function changeCurrentSongDetails(songObj) {
         window.onload = function(){
                     // external plugins for sorting and rearrangin
                   changeCurrentSongDetails(songs[0]);
+                  changeSongDisplay(songs[0]);
                 updateCurrentTime();      // this is added for the  1st second after that set interval will call it again and gain after 1 second
                 setInterval(function(){
                 updateCurrentTime();
@@ -153,6 +162,7 @@ function changeCurrentSongDetails(songObj) {
           audio.src = nextSongObj.fileName // changing the source of the audio
           toggleSong(); // playing the song of which src has been changed
           changeCurrentSongDetails(nextSongObj); // updatng the details such as image at the bottom
+          changeSongDisplay(nextSongObj);
           currentSongNumber = currentSongNumber +1; // increasing the value of currentSongNumber for the next time
         }else{
           // stop playin
@@ -222,7 +232,9 @@ function changeCurrentSongDetails(songObj) {
         //   console.log(currentSongNumber -1);
         //   console.log(obj.name);
         //   console.log(obj.artist);
-          changeCurrentSongDetails( obj);   // updating the song details just above the footer of the playing song
+          changeCurrentSongDetails( obj);
+          changeSongDisplay(obj);
+            // updating the song details just above the footer of the playing song
           var nextSongObj = songs[currentSongNumber-1]; // since song is arra then currentSongnumber is intialed by 1 then it will always go to next song
           var audio =document.querySelector('audio');
           audio.src = nextSongObj.fileName // changing the source of the audio the previous song
@@ -234,7 +246,18 @@ function changeCurrentSongDetails(songObj) {
       $('.play-icon').on('click', function() {  // on clicking the play the current song
           toggleSong();
       });
+      $('.fa-podcast').on('click', function() {  // on clicking the play the current song
 
+          willImers =1 - willImers;
+          if(willImers == 0) {
+            $('#immers').addClass('hidden');
+            $('#mineslider').removeClass('hidden');
+            console.log('now class have to be hidden');}
+          else {
+            $('#immers').removeClass('hidden');
+            $('#mineslider').addClass('hidden');
+            console.log('now class have to be unhidden'); }
+      });
       $('body').on('keypress', function(event) {
                   var target = event.target; // tag is being stored here event ovject contains a lot of information, we select the target and then inside target we select tagName
                   // tagName attribute will contain while pressing the key which tag was selected or in which tag we were present at that time
@@ -262,4 +285,26 @@ function changeCurrentSongDetails(songObj) {
            var audio = document.querySelector('audio');
            audio.currentTime = (audio.duration * time)/100;
            updateSongProgress();
-        })
+        });
+        function changeSongDisplay(songObj) {
+         var directory = songObj.images;
+         var images = $('.image-moments');
+         for (var i = 0; i < images.length; i++) {
+           images[i].setAttribute("src", directory+"/img"+(i + 1)+".jpg");
+         }
+      }
+
+
+
+// Image Slider Moments generation Codepen - https://codepen.io/anon/pen/MoZvvq
+    var current = 0,
+    slides = $('.image-moments');
+      function createMoments() {
+        setInterval(function() {
+         for (var i = 0; i < slides.length; i++) {
+           slides[i].style.opacity = 0;
+         }
+         current = (current != slides.length - 1) ? current + 1 : 0;
+         slides[current].style.opacity = 1;
+      }, 5000);
+    }
