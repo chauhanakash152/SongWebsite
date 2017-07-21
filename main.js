@@ -171,7 +171,8 @@ function changeCurrentSongDetails(songObj) {
           $('.play-icon').removeClass('fa-pause').addClass('fa-play');
           audio.currentTime =0;
         }
-      })
+      });
+      $(".dataTables_filter input").css("background-color", "black");
       $('.welcome-screen button').on('click', function() {
           var name = $('#name-input').val();
           if (name.length >= 2) {
