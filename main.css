@@ -169,7 +169,8 @@ h1 {
     position: relative;
 }
 .current-song-wrapper {
-    position: absolute;
+    /*position: absolute;*/
+    position: relative ;
     bottom: 0;
     display: flex;
 }
